@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/11 16:12:33 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/11 18:35:48 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_fork
 {
 	unsigned int	fork;
 	pthread_mutex_t	mutex;
+	struct s_fork	*next;
 }	t_fork;
 
 typedef struct s_phil
@@ -45,23 +46,29 @@ typedef struct s_phil
 	
 }	t_phil;
 
+typedef struct s_env
+{
+	t_fork	*fork;
+	t_phil	*philosopher;
+}	t_env;
+
 // Initial Error Check
 
 void			check_args(int argc, char **argv);
 void			error(char *error_msg);
-void			lst_error(char *error_msg, 
-					t_phil **philosopher,unsigned int idx);
+void			phil_lst_error(char *error_msg,
+					t_env **env, unsigned int idx);
 int				ft_isspace(char c);
 int				ft_strlen(char *str);
 int				is_posnbr(char *nptr);
-void			phil_lstclear(t_phil **lst, unsigned int lst_size);
-
+void			phil_lstclear(t_env **env, unsigned int lst_size);
 
 // Initialer auxiliary functions
 
 unsigned int	atui(char *nptr);
 void			*ft_calloc(size_t nmemb, size_t size);
-void			phil_lstadd_back(t_phil **lst, t_phil *new, unsigned int i);
-void			phil_last_link(t_phil **lst);
-void			phil_lst_check(t_phil **lst, unsigned int lst_size);
+void			philosophers_init(t_env **env, char **argv);
+void			phil_lstadd_back(t_env **env, t_phil *new, unsigned int i);
+void			phil_last_link(t_env **env);
+void			phil_lst_check(t_env **env, unsigned int lst_size);
 #endif

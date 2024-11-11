@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:51:30 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/11 16:07:28 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/11 16:40:42 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,19 @@ void	error(char *error_msg)
 	exit(1);
 }
 
-void	lst_error(char *error_msg, t_phil **philosopher, unsigned int idx)
+// void	fork_lst_error(char *error_msg, t_fork **fork, unsigned int idx)
+// {
+// 	fork_lstclear(fork, idx);
+// 	write(2, error_msg, ft_strlen(error_msg));
+// 	exit(1);
+// }
+
+void	phil_lst_error(char *error_msg, t_env **env, unsigned int idx)
 {
-	phil_lstclear(philosopher, idx);
-	write(2, error_msg, ft_strlen(error_msg));
-	exit(1);
+	// fork_lstclear((*env)->fork, idx);
+	phil_lstclear(env, idx);
+	free(env);
+	error(error_msg);
 }
 
 int	ft_isspace(char c)

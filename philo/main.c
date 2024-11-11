@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:05:34 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/11 16:20:09 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/11 18:45:38 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,33 +27,34 @@ void	check_args(int argc, char **argv)
 	}
 }
 
-t_phil	*philosophers_init(char **argv)
+void	philosophers_init(t_env **env, char **argv)
 {
-	t_phil			*philosopher;
 	unsigned int 	i;
 
-	i = 0;
-	philosopher = NULL;
-	while (i < atui(argv[1]))
+	i = 1;
+	while (i <= atui(argv[1]))
 	{
 		printf("Node %i\n", i); //
-		phil_lstadd_back(&philosopher,
+		phil_lstadd_back(env,
 			(t_phil *)ft_calloc(1, sizeof(t_phil)), i);
-		if (i == atui(argv[1]) - 1)
-			phil_last_link(&philosopher);
+		if (i == atui(argv[1]))
+			phil_last_link(env);
 		i++;
 	}
-	phil_lst_check(&philosopher, atui(argv[1])); //
-	return (philosopher);
+	phil_lst_check(env, atui(argv[1])); //
 }
 
 int	main(int argc, char **argv)
 {
-	t_phil			*philosopher;
+	t_env			*env;
 
 	check_args(argc, argv);
-	philosopher = philosophers_init(argv);
+	env = (t_env *)ft_calloc(1, sizeof(t_env));
+	if (!env)
+		error("Failed to create env variable.\n");
+	philosophers_init(&env, argv);
 
-	phil_lstclear(&philosopher, atui(argv[1]));
+	phil_lstclear(&env, atui(argv[1]));
+	free(env);
 	return (0);
 }
