@@ -6,7 +6,7 @@
 #    By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/11 09:52:49 by tjorge-l          #+#    #+#              #
-#    Updated: 2024/11/11 09:56:54 by tjorge-l         ###   ########.fr        #
+#    Updated: 2024/11/11 16:16:13 by tjorge-l         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,11 @@ NAME := philo
 
 CC := cc
 
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -pthread -Wall -Wextra -Werror
 DEBUG_FLAGS = -g
 
-SRC := server.c
+SRC := main.c error.c \
+init_a.c init_b.c init_c.c
 
 OBJ := $(SRC:.c=.o)
 
