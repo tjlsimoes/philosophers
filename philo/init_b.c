@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:15:49 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/11 18:59:25 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:50:14 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	phil_lstadd_back(t_env **env, t_phil *new, unsigned int i)
 	if (!new)
 		phil_lst_error("Error initializing philosopher struct.", env, i);
 	new->phil = i;
+	new->left_fork = get_fork_nbr(env, i - 1);
+	new->right_fork = get_fork_nbr(env, i);
 	node = (*env)->philosopher;
 	if (!node)
 	{
@@ -77,6 +79,8 @@ void	phil_lst_check(t_env **env, unsigned int lst_size)
 	while (i <= lst_size)
 	{
 		printf("Current philosopher: %d\n", node->phil);
+		printf("Fork to the left: %d\n", node->left_fork->fork);
+		printf("Fork to the right: %d\n", node->right_fork->fork);
 		printf("Philosopher to the left: %d\n", node->left_phil->phil);
 		printf("Philosopher to the right: %d\n", node->right_phil->phil);
 		node = node->right_phil;

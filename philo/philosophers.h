@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/11 19:15:17 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:49:38 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ typedef struct s_phil
 
 typedef struct s_env
 {
-	t_fork	*fork;
-	t_phil	*philosopher;
+	t_fork			*fork;
+	t_phil			*philosopher;
+	unsigned int	nbr_phil;
 }	t_env;
 
 // Initial Error Check
@@ -69,16 +70,17 @@ int				is_posnbr(char *nptr);
 unsigned int	atui(char *nptr);
 void			*ft_calloc(size_t nmemb, size_t size);
 
-void			philosophers_init(t_env **env, char **argv);
+void			philosophers_init(t_env **env);
 void			phil_lstadd_back(t_env **env, t_phil *new, unsigned int i);
 void			phil_lstclear(t_env **env, unsigned int lst_size);
 void			phil_last_link(t_env **env);
 void			phil_lst_check(t_env **env, unsigned int lst_size);
 
-void			forks_init(t_env **env, char **argv);
+void			forks_init(t_env **env);
 void			fork_lstclear(t_env **env, unsigned int lst_size);
 void			fork_lstadd_back(t_env **env, t_fork *new, unsigned int i);
 void			fork_lst_check(t_env **env, unsigned int lst_size);
+t_fork			*get_fork_nbr(t_env **env, unsigned int nbr);
 
 
 #endif

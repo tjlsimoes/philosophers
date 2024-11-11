@@ -68,3 +68,21 @@ void	fork_lst_check(t_env **env, unsigned int lst_size)
 		i++;
 	}
 }
+
+t_fork	*get_fork_nbr(t_env **env, unsigned int nbr)
+{
+	t_fork			*node;
+
+	if (!env || nbr > (*env)->nbr_phil)
+		return (NULL);
+	if (nbr == 0)
+		nbr = (*env)->nbr_phil;
+	node = (*env)->fork;
+	while (node)
+	{
+		if (node->fork == nbr)
+			return (node);
+		node = node->next;
+	}
+	return (NULL);
+}
