@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/11 18:35:48 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:15:17 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,27 @@ void			check_args(int argc, char **argv);
 void			error(char *error_msg);
 void			phil_lst_error(char *error_msg,
 					t_env **env, unsigned int idx);
+void			fork_lst_error(char *error_msg, 
+					t_env **env, unsigned int idx);
 int				ft_isspace(char c);
 int				ft_strlen(char *str);
 int				is_posnbr(char *nptr);
-void			phil_lstclear(t_env **env, unsigned int lst_size);
 
 // Initialer auxiliary functions
 
 unsigned int	atui(char *nptr);
 void			*ft_calloc(size_t nmemb, size_t size);
+
 void			philosophers_init(t_env **env, char **argv);
 void			phil_lstadd_back(t_env **env, t_phil *new, unsigned int i);
+void			phil_lstclear(t_env **env, unsigned int lst_size);
 void			phil_last_link(t_env **env);
 void			phil_lst_check(t_env **env, unsigned int lst_size);
+
+void			forks_init(t_env **env, char **argv);
+void			fork_lstclear(t_env **env, unsigned int lst_size);
+void			fork_lstadd_back(t_env **env, t_fork *new, unsigned int i);
+void			fork_lst_check(t_env **env, unsigned int lst_size);
+
+
 #endif
