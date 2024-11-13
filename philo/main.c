@@ -6,7 +6,7 @@
 /*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:05:34 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/13 13:18:16 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/13 15:56:25 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	philosophers_init(t_env **env)
 			phil_last_link(env);
 		i++;
 	}
-	phil_lst_check(env, (*env)->nbr_phil); //
+	// phil_lst_check(env, (*env)->nbr_phil); //
 }
 
 void	forks_init(t_env **env)

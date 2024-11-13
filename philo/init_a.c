@@ -6,7 +6,7 @@
 /*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:12:14 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/13 13:25:52 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/13 15:58:22 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,77 @@ void	*mock(void *arg)
 	// tid = pthread_self();
 	tid = ((t_phil *)arg)->thread_id;
 	printf("Thread [%ld]\n", tid);
+
+	return (NULL);
+}
+
+long	get_time()
+{
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return (time.tv_usec * 0.001);
+}
+
+void	eat(t_phil **phil)
+{
+	unsigned int	phil_nbr;
+
+	phil_nbr = (*phil)->phil;
+	(*phil)->state = HUNGRY;
+	if (phil_nbr == 1)
+	{
+		pthread_mutex_lock(&(*phil)->right_fork->mutex);
+		printf("%ld %u has taken the right fork %u\n", get_time(), phil_nbr, (*phil)->right_fork->fork);
+		pthread_mutex_lock(&(*phil)->left_fork->mutex);
+		printf("%ld %u has taken the left fork %u\n", get_time(), phil_nbr, (*phil)->left_fork->fork);
+	}
+	else
+	{
+		pthread_mutex_lock(&(*phil)->left_fork->mutex);
+		printf("%ld %u has taken the left fork %u\n", get_time(), phil_nbr, (*phil)->left_fork->fork);
+		pthread_mutex_lock(&(*phil)->right_fork->mutex);
+		printf("%ld %u has taken the right fork %u\n", get_time(), phil_nbr, (*phil)->right_fork->fork);
+	}
+		(*phil)->state = EATING;
+		printf("%ld %u is eating\n", get_time(), phil_nbr);
+		usleep((*phil)->eat_time);
+		(*phil)->meals++;
+		pthread_mutex_unlock(&(*phil)->right_fork->mutex);
+		printf("%ld %u has released the right fork %u\n", get_time(), phil_nbr, (*phil)->right_fork->fork);
+		pthread_mutex_unlock(&(*phil)->left_fork->mutex);
+		printf("%ld %u has released the left fork %u\n", get_time(), phil_nbr, (*phil)->left_fork->fork);
+}
+
+void	rest(t_phil **phil)
+{
+	(*phil)->state = SLEEPING;
+	printf("%ld %u is sleeping\n", get_time(), (*phil)->phil);
+	usleep((*phil)->sleep_time);
+}
+
+void	think(t_phil **phil)
+{
+	(*phil)->state = THINKING;
+	printf("%ld %u is thinking\n", get_time(), (*phil)->phil);
+	usleep(THINK_TIME);
+}
+
+void	*routine(void *arg)
+{
+	pthread_t 	tid;
+	t_phil		*phil;
+
+	phil = (t_phil *)arg;
+	tid = phil->thread_id;
+	printf("%ld Thread [%ld]\n", get_time(), tid);
+
+	while (phil->meals < phil->must_meals)
+	{
+		eat(&phil);
+		rest(&phil);
+		think(&phil);
+	}
 
 	return (NULL);
 }

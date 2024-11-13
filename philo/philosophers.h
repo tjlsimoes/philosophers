@@ -6,7 +6,7 @@
 /*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/13 13:23:23 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/13 16:00:19 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,13 @@
 # include <stdio.h>
 # include <sys/time.h>
 # include <pthread.h>
+#ifndef THINK_TIME
+# define THINK_TIME 10
+#endif
 
 typedef enum e_state
 {
+	HUNGRY,
 	EATING,
 	THINKING,
 	SLEEPING
@@ -94,6 +98,12 @@ t_fork			*get_fork_nbr(t_env **env, unsigned int nbr);
 void			create_threads(t_env **env, unsigned int lst_size);
 void			join_threads(t_env **env, unsigned int lst_size);
 void			*mock(void *arg);
+
+long			get_time();
+void			eat(t_phil **phil);
+void			rest(t_phil **phil);
+void			think(t_phil **phil);
+void			*routine(void *arg);
 
 
 #endif

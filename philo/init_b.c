@@ -6,7 +6,7 @@
 /*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:15:49 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/13 13:23:36 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/13 15:16:49 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	create_threads(t_env **env, unsigned int lst_size)
 		return ;
 	while (i <= lst_size)
 	{
-		pthread_create(&node->thread_id, NULL, mock, node);
+		pthread_create(&node->thread_id, NULL, routine, node);
 		node = node->right_phil;
 		i++;
 	}
