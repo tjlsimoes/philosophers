@@ -6,7 +6,7 @@
 /*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:05:34 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/13 11:02:41 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/13 12:54:55 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	check_args(int argc, char **argv)
 	while (i < argc)
 	{
 		if (!is_posnbr(argv[i]))
+			error("Invalid argument.\n");
+		if (i == 1 && atui(argv[i]) <= 0)
 			error("Invalid argument.\n");
 		i++;
 	}
