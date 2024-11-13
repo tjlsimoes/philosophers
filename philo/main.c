@@ -6,7 +6,7 @@
 /*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:05:34 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/13 12:54:55 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/13 13:18:16 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,30 @@ void	forks_init(t_env **env)
 	}
 }
 
+t_env	*env_init(int argc, char **argv)
+{
+	t_env	*env;
+
+	env = (t_env *)ft_calloc(1, sizeof(t_env));
+	if (!env)
+		error("Failed to create env variable.\n");
+	env->die_time = atui(argv[2]);
+	env->eat_time = atui(argv[3]);
+	env->sleep_time = atui(argv[4]);
+	if (argc == 6)
+		env->must_meals = atui(argv[5]);
+	else
+		env->must_meals = -1;
+	env->nbr_phil = atui(argv[1]);
+	return (env);
+}
+
 int	main(int argc, char **argv)
 {
 	t_env			*env;
 
 	check_args(argc, argv);
-	env = (t_env *)ft_calloc(1, sizeof(t_env));
-	if (!env)
-		error("Failed to create env variable.\n");
-	env->nbr_phil = atui(argv[1]);
+	env = env_init(argc, argv);
 	forks_init(&env);
 	philosophers_init(&env);
 
