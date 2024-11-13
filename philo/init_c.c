@@ -14,8 +14,8 @@
 
 void	fork_lstclear(t_env **env, unsigned int lst_size)
 {
-	t_fork	*previous_node;
-	t_fork	*current_node;
+	t_fork				*previous_node;
+	t_fork				*current_node;
 	unsigned int		i;
 
 	if (!(*env)->fork)
@@ -26,6 +26,7 @@ void	fork_lstclear(t_env **env, unsigned int lst_size)
 	{
 		previous_node = current_node;
 		current_node = previous_node->next;
+		pthread_mutex_destroy(&previous_node->mutex);
 		free(previous_node);
 		previous_node = NULL;
 		i++;
@@ -40,6 +41,7 @@ void	fork_lstadd_back(t_env **env, t_fork *new, unsigned int i)
 	if (!new)
 		fork_lst_error("Error initializing fork struct.", env, i);
 	new->fork = i;
+	pthread_mutex_init(&new->mutex, NULL);
 	node = (*env)->fork;
 	if (!node)
 	{
