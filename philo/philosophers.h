@@ -6,7 +6,7 @@
 /*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/13 13:16:48 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/13 13:23:23 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,16 @@ typedef struct s_fork
 
 typedef struct s_phil
 {
-	pthread_t		thread_id;
 	unsigned int	phil;
+	pthread_t		thread_id;
 	t_state			state;
+	unsigned int	meals;
+	unsigned int	die_time;
+	unsigned int	eat_time;
+	unsigned int	sleep_time;
+	long			must_meals;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
-	unsigned int	meals;
 	struct s_phil	*left_phil;
 	struct s_phil	*right_phil;
 	
