@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:05:34 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/11 19:51:36 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:02:41 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ int	main(int argc, char **argv)
 	env->nbr_phil = atui(argv[1]);
 	forks_init(&env);
 	philosophers_init(&env);
+
+	create_threads(&env, env->nbr_phil);
+	join_threads(&env, env->nbr_phil);
 
 	fork_lstclear(&env, env->nbr_phil);
 	phil_lstclear(&env, env->nbr_phil);

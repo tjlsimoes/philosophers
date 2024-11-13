@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/11 19:49:38 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/13 10:46:53 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_fork
 
 typedef struct s_phil
 {
+	pthread_t		thread_id;
 	unsigned int	phil;
 	t_state			state;
 	t_fork			*left_fork;
@@ -81,6 +82,10 @@ void			fork_lstclear(t_env **env, unsigned int lst_size);
 void			fork_lstadd_back(t_env **env, t_fork *new, unsigned int i);
 void			fork_lst_check(t_env **env, unsigned int lst_size);
 t_fork			*get_fork_nbr(t_env **env, unsigned int nbr);
+
+void			create_threads(t_env **env, unsigned int lst_size);
+void			join_threads(t_env **env, unsigned int lst_size);
+void			*mock(void *arg);
 
 
 #endif

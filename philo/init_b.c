@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_b.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:15:49 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/11 19:50:14 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/13 10:59:40 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,40 @@ void	phil_last_link(t_env **env)
 		node = node->right_phil;
 	node->right_phil = (*env)->philosopher;
 	(*env)->philosopher->left_phil = node;
+}
+
+void	create_threads(t_env **env, unsigned int lst_size)
+{
+	t_phil			*node;
+	unsigned int	i;
+
+	node = (*env)->philosopher;
+	i = 1;
+	if (!node)
+		return ;
+	while (i <= lst_size)
+	{
+		pthread_create(&node->thread_id, NULL, mock, node);
+		node = node->right_phil;
+		i++;
+	}
+}
+
+void	join_threads(t_env **env, unsigned int lst_size)
+{
+	t_phil			*node;
+	unsigned int	i;
+
+	node = (*env)->philosopher;
+	i = 1;
+	if (!node)
+		return ;
+	while (i <= lst_size)
+	{
+		pthread_join(node->thread_id, NULL);
+		node = node->right_phil;
+		i++;
+	}
 }
 
 void	phil_lst_check(t_env **env, unsigned int lst_size)

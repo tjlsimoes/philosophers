@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_a.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:12:14 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/11 16:16:35 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:01:15 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,18 @@ unsigned int	atui(char *nptr)
 		nptr++;
 	}
 	return (nbr);
+}
+
+void	*mock(void *arg)
+{
+	pthread_t tid;
+
+	if (!arg)
+		printf("No arg!\n");
+
+	// tid = pthread_self();
+	tid = ((t_phil *)arg)->thread_id;
+	printf("Thread [%ld]\n", tid);
+
+	return (NULL);
 }
