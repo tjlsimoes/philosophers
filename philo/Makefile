@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+         #
+#    By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/11 09:52:49 by tjorge-l          #+#    #+#              #
-#    Updated: 2024/11/11 16:16:13 by tjorge-l         ###   ########.fr        #
+#    Updated: 2024/11/13 13:04:39 by tjorge-l         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,4 +40,4 @@ debug: all
 
 re: fclean all
 
-.PHONY: all philo clean fclean debug re
+.PHONY: all clean fclean debug re
