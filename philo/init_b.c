@@ -6,7 +6,7 @@
 /*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:15:49 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/13 10:59:40 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/13 12:41:51 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,23 +101,3 @@ void	join_threads(t_env **env, unsigned int lst_size)
 	}
 }
 
-void	phil_lst_check(t_env **env, unsigned int lst_size)
-{
-	t_phil			*node;
-	unsigned int	i;
-
-	node = (*env)->philosopher;
-	i = 1;
-	if (!node)
-		return ;
-	while (i <= lst_size)
-	{
-		printf("Current philosopher: %d\n", node->phil);
-		printf("Fork to the left: %d\n", node->left_fork->fork);
-		printf("Fork to the right: %d\n", node->right_fork->fork);
-		printf("Philosopher to the left: %d\n", node->left_phil->phil);
-		printf("Philosopher to the right: %d\n", node->right_phil->phil);
-		node = node->right_phil;
-		i++;
-	}
-}
