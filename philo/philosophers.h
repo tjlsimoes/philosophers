@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/18 16:44:17 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/18 18:57:10 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,4 +117,6 @@ void			*routine(void *arg);
 
 int				action(t_action ACTION, void (*f)(t_phil **), t_phil **phil);
 int				end_check(t_phil **phil);
+void			pickup_forks(t_phil **phil, unsigned int phil_nbr);
+
 #endif
