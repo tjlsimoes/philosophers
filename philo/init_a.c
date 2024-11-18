@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_a.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:12:14 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/13 15:58:22 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/18 12:52:12 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,20 +69,6 @@ void	phil_lst_check(t_env **env, unsigned int lst_size)
 	}
 }
 
-void	*mock(void *arg)
-{
-	pthread_t tid;
-
-	if (!arg)
-		printf("No arg!\n");
-
-	// tid = pthread_self();
-	tid = ((t_phil *)arg)->thread_id;
-	printf("Thread [%ld]\n", tid);
-
-	return (NULL);
-}
-
 long	get_time()
 {
 	struct timeval	time;
@@ -91,11 +77,15 @@ long	get_time()
 	return (time.tv_usec * 0.001);
 }
 
-void	eat(t_phil **phil)
+int	dead_check(unsigned int current, unsigned int last, unsigned int die_time)
 {
-	unsigned int	phil_nbr;
+	if ((current - last) > die_time)
+		return (1);
+	return (0);
+}
 
-	phil_nbr = (*phil)->phil;
+void pickup_forks(t_phil **phil, unsigned int phil_nbr)
+{
 	(*phil)->state = HUNGRY;
 	if (phil_nbr == 1)
 	{
@@ -111,14 +101,23 @@ void	eat(t_phil **phil)
 		pthread_mutex_lock(&(*phil)->right_fork->mutex);
 		printf("%ld %u has taken the right fork %u\n", get_time(), phil_nbr, (*phil)->right_fork->fork);
 	}
-		(*phil)->state = EATING;
-		printf("%ld %u is eating\n", get_time(), phil_nbr);
-		usleep((*phil)->eat_time);
-		(*phil)->meals++;
-		pthread_mutex_unlock(&(*phil)->right_fork->mutex);
-		printf("%ld %u has released the right fork %u\n", get_time(), phil_nbr, (*phil)->right_fork->fork);
-		pthread_mutex_unlock(&(*phil)->left_fork->mutex);
-		printf("%ld %u has released the left fork %u\n", get_time(), phil_nbr, (*phil)->left_fork->fork);
+}
+
+void	eat(t_phil **phil)
+{
+	unsigned int	phil_nbr;
+
+	phil_nbr = (*phil)->phil;
+	pickup_forks(phil, phil_nbr);
+	(*phil)->state = EATING;
+	printf("%ld %u is eating\n", get_time(), phil_nbr);
+	(*phil)->last_meal = get_time();
+	usleep((*phil)->eat_time);
+	(*phil)->meals++;
+	pthread_mutex_unlock(&(*phil)->right_fork->mutex);
+	printf("%ld %u has released the right fork %u\n", get_time(), phil_nbr, (*phil)->right_fork->fork);
+	pthread_mutex_unlock(&(*phil)->left_fork->mutex);
+	printf("%ld %u has released the left fork %u\n", get_time(), phil_nbr, (*phil)->left_fork->fork);
 }
 
 void	rest(t_phil **phil)
@@ -135,6 +134,34 @@ void	think(t_phil **phil)
 	usleep(THINK_TIME);
 }
 
+int	action(t_action ACTION, void (*f)(t_phil **), t_phil **phil)
+{
+	unsigned int	action_time;
+
+	if (ACTION == EAT)
+		action_time = (*phil)->eat_time;
+	else if (ACTION == SLEEP)
+		action_time = (*phil)->sleep_time;
+	else
+		action_time = THINK_TIME;
+	if (dead_check(get_time(), (*phil)->last_meal, (*phil)->die_time))
+	{
+		(*phil)->state = DEAD;
+		printf("%ld %u has died\n", get_time(), (*phil)->phil);
+		return (0);
+	}
+	if (dead_check(get_time() + action_time, (*phil)->last_meal, (*phil)->die_time))
+	{
+		printf("%u will die during %i\n", (*phil)->phil, (int)ACTION);
+		usleep(action_time);
+		(*phil)->state = DEAD;
+		printf("%ld %u has died\n", get_time(), (*phil)->phil);
+		return (0);
+	}
+	f(phil);
+	return (1);
+}
+
 void	*routine(void *arg)
 {
 	pthread_t 	tid;
@@ -146,9 +173,12 @@ void	*routine(void *arg)
 
 	while (phil->meals < phil->must_meals)
 	{
-		eat(&phil);
-		rest(&phil);
-		think(&phil);
+		if (!action(EAT, eat, &phil))
+			break;
+		if (!action(SLEEP, rest, &phil))
+			break;
+		if (!action(THINK, think, &phil))
+			break;
 	}
 
 	return (NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_b.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:15:49 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/13 15:16:49 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/18 12:52:38 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,11 @@ void	create_threads(t_env **env, unsigned int lst_size)
 	unsigned int	i;
 
 	node = (*env)->philosopher;
-	i = 1;
 	if (!node)
 		return ;
+	node->last_meal = get_time();
+	// printf("Last meal value: %d\n", node->last_meal);
+	i = 1;
 	while (i <= lst_size)
 	{
 		pthread_create(&node->thread_id, NULL, routine, node);

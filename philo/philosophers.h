@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/13 16:00:19 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/18 12:51:40 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,20 @@
 # define THINK_TIME 10
 #endif
 
+typedef enum e_action
+{
+	EAT,
+	SLEEP,
+	THINK
+}	t_action;
+
 typedef enum e_state
 {
 	HUNGRY,
 	EATING,
 	THINKING,
-	SLEEPING
+	SLEEPING,
+	DEAD
 }	t_state;
 
 typedef struct s_fork
@@ -44,6 +52,7 @@ typedef struct s_phil
 	pthread_t		thread_id;
 	t_state			state;
 	unsigned int	meals;
+	unsigned int	last_meal;
 	unsigned int	die_time;
 	unsigned int	eat_time;
 	unsigned int	sleep_time;
@@ -97,13 +106,13 @@ t_fork			*get_fork_nbr(t_env **env, unsigned int nbr);
 
 void			create_threads(t_env **env, unsigned int lst_size);
 void			join_threads(t_env **env, unsigned int lst_size);
-void			*mock(void *arg);
 
+int				dead_check(unsigned int current, unsigned int last, unsigned int t);
 long			get_time();
 void			eat(t_phil **phil);
 void			rest(t_phil **phil);
 void			think(t_phil **phil);
 void			*routine(void *arg);
 
-
+int				action(t_action ACTION, void (*f)(t_phil **), t_phil **phil);
 #endif
