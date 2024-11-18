@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:12:14 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/18 12:52:12 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/18 18:27:55 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,31 @@ void	phil_lst_check(t_env **env, unsigned int lst_size)
 		node = node->right_phil;
 		i++;
 	}
+}
+
+int	end_check(t_phil **phil)
+{
+	t_phil			*node;
+	unsigned int	i;
+	unsigned int	nbr_phil;
+	int				all_full;
+
+	i = 0;
+	all_full = 1;
+	node = *phil;
+	nbr_phil = (*phil)->nbr_phil;
+	while (i < nbr_phil)
+	{
+		if (node->state == DEAD)
+			return (1);
+		if (node->meals != node->must_meals)
+			all_full = 0;
+		node = node->right_phil;
+		i++;
+	}
+	if (all_full == 1)
+		return (1);
+	return (0);
 }
 
 long	get_time()
@@ -158,18 +183,20 @@ int	action(t_action ACTION, void (*f)(t_phil **), t_phil **phil)
 		printf("%ld %u has died\n", get_time(), (*phil)->phil);
 		return (0);
 	}
+	if (end_check(phil))
+		return (0);
 	f(phil);
 	return (1);
 }
 
 void	*routine(void *arg)
 {
-	pthread_t 	tid;
+	// pthread_t 	tid;
 	t_phil		*phil;
 
 	phil = (t_phil *)arg;
-	tid = phil->thread_id;
-	printf("%ld Thread [%ld]\n", get_time(), tid);
+	// tid = phil->thread_id;
+	// printf("%ld Thread [%ld]\n", get_time(), tid);
 
 	while (phil->meals < phil->must_meals)
 	{

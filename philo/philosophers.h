@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/18 12:51:40 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:44:17 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,12 @@ typedef struct s_phil
 	pthread_t		thread_id;
 	t_state			state;
 	unsigned int	meals;
-	unsigned int	last_meal;
+	long			last_meal;
 	unsigned int	die_time;
 	unsigned int	eat_time;
 	unsigned int	sleep_time;
 	long			must_meals;
+	unsigned int	nbr_phil;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
 	struct s_phil	*left_phil;
@@ -115,4 +116,5 @@ void			think(t_phil **phil);
 void			*routine(void *arg);
 
 int				action(t_action ACTION, void (*f)(t_phil **), t_phil **phil);
+int				end_check(t_phil **phil);
 #endif
