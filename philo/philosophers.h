@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/18 18:57:10 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/20 11:44:22 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,15 +108,16 @@ t_fork			*get_fork_nbr(t_env **env, unsigned int nbr);
 void			create_threads(t_env **env, unsigned int lst_size);
 void			join_threads(t_env **env, unsigned int lst_size);
 
-int				dead_check(unsigned int current, unsigned int last, unsigned int t);
+int				dead_check(unsigned int current, unsigned int last, unsigned int die_time);
 long			get_time();
 void			eat(t_phil **phil);
 void			rest(t_phil **phil);
 void			think(t_phil **phil);
 void			*routine(void *arg);
 
-int				action(t_action ACTION, void (*f)(t_phil **), t_phil **phil);
+int				action(void (*f)(t_phil **), t_phil **phil);
 int				end_check(t_phil **phil);
 void			pickup_forks(t_phil **phil, unsigned int phil_nbr);
+void			smart_sleep(t_phil **phil, unsigned int time);
 
 #endif

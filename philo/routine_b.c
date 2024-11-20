@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:55:53 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/18 18:57:40 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/18 19:37:08 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,13 @@ int	end_check(t_phil **phil)
 			all_full = 0;
 		node = node->right_phil;
 		i++;
+	}
+	if (dead_check(get_time(),
+		(*phil)->last_meal, (*phil)->die_time))
+	{
+		(*phil)->state = DEAD;
+		printf("%ld %u has died\n", get_time(), (*phil)->phil);
+		return (1);
 	}
 	if (all_full == 1)
 		return (1);
@@ -57,15 +64,23 @@ void pickup_forks(t_phil **phil, unsigned int phil_nbr)
 	(*phil)->state = HUNGRY;
 	if (phil_nbr == 1)
 	{
+		if (end_check(phil))
+			return ;
 		pthread_mutex_lock(&(*phil)->right_fork->mutex);
 		printf("%ld %u has taken the right fork %u\n", get_time(), phil_nbr, (*phil)->right_fork->fork);
+		if (end_check(phil))
+			return ;
 		pthread_mutex_lock(&(*phil)->left_fork->mutex);
 		printf("%ld %u has taken the left fork %u\n", get_time(), phil_nbr, (*phil)->left_fork->fork);
 	}
 	else
 	{
+		if (end_check(phil))
+			return ;
 		pthread_mutex_lock(&(*phil)->left_fork->mutex);
 		printf("%ld %u has taken the left fork %u\n", get_time(), phil_nbr, (*phil)->left_fork->fork);
+		if (end_check(phil))
+			return ;
 		pthread_mutex_lock(&(*phil)->right_fork->mutex);
 		printf("%ld %u has taken the right fork %u\n", get_time(), phil_nbr, (*phil)->right_fork->fork);
 	}
