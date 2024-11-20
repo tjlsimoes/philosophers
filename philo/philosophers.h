@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/20 11:53:39 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:54:52 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,6 @@
 # define THINK_TIME 10
 #endif
 
-typedef enum e_action
-{
-	EAT,
-	SLEEP,
-	THINK
-}	t_action;
-
-typedef enum e_state
-{
-	HUNGRY,
-	EATING,
-	THINKING,
-	SLEEPING,
-	DEAD
-}	t_state;
-
 typedef struct s_fork
 {
 	unsigned int	fork;
@@ -51,14 +35,8 @@ typedef struct s_phil
 	unsigned int	phil;
 	pthread_t		thread_id;
 	struct s_env	*env;
-	t_state			state;
 	unsigned int	meals;
 	long			last_meal;
-	// unsigned int	die_time;
-	// unsigned int	eat_time;
-	// unsigned int	sleep_time;
-	// long			must_meals;
-	// unsigned int	nbr_phil;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
 	struct s_phil	*left_phil;
@@ -75,7 +53,7 @@ typedef struct s_env
 	unsigned int	die_time;
 	unsigned int	eat_time;
 	unsigned int	sleep_time;
-	long			must_meals;
+	unsigned int	must_meals;
 	pthread_mutex_t	write_mutex;
 	pthread_mutex_t	dead_mutex;
 }	t_env;
@@ -92,7 +70,7 @@ int				ft_isspace(char c);
 int				ft_strlen(char *str);
 int				is_posnbr(char *nptr);
 
-// Initialer auxiliary functions
+// Initializer auxiliary functions
 
 unsigned int	atui(char *nptr);
 void			*ft_calloc(size_t nmemb, size_t size);
@@ -112,7 +90,7 @@ t_fork			*get_fork_nbr(t_env **env, unsigned int nbr);
 void			create_threads(t_env **env, unsigned int lst_size);
 void			join_threads(t_env **env, unsigned int lst_size);
 
-int				dead_check(unsigned int current, unsigned int last, unsigned int die_time);
+int				dead_check(long current, long last, unsigned int die_time);
 long			get_time();
 void			eat(t_phil **phil);
 void			rest(t_phil **phil);
@@ -121,7 +99,9 @@ void			*routine(void *arg);
 
 int				action(void (*f)(t_phil **), t_phil **phil);
 int				end_check(t_phil **phil);
-void			pickup_forks(t_phil **phil, unsigned int phil_nbr);
+int				pickup_forks(t_phil **phil, unsigned int phil_nbr);
 void			smart_sleep(t_phil **phil, unsigned int time);
+int				eat_smart_sleep(t_phil **phil, unsigned int time);
+void			msg_write(t_phil **phil, char *str);
 
 #endif

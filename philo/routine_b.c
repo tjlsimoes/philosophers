@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:55:53 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/20 11:50:12 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:48:58 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,28 @@
 
 int	end_check(t_phil **phil)
 {
-	t_phil			*node;
-	unsigned int	i;
-	unsigned int	nbr_phil;
-	int				all_full;
+	// int				all_full;
 
-	i = 0;
-	all_full = 1;
-	node = *phil;
-	nbr_phil = (*phil)->env->nbr_phil;
-	while (i < nbr_phil)
+	// all_full = 1;
+	pthread_mutex_lock(&(*phil)->env->dead_mutex);
+	if ((*phil)->env->dead != 0)
 	{
-		if (node->state == DEAD)
-			return (1);
-		if (node->meals != node->env->must_meals)
-			all_full = 0;
-		node = node->right_phil;
-		i++;
+		pthread_mutex_unlock(&(*phil)->env->dead_mutex);
+		return (1);
 	}
 	if (dead_check(get_time(),
 		(*phil)->last_meal, (*phil)->env->die_time))
 	{
-		(*phil)->state = DEAD;
+		(*phil)->env->dead = 1;
+		pthread_mutex_lock(&(*phil)->env->write_mutex);
 		printf("%ld %u has died\n", get_time(), (*phil)->phil);
+		pthread_mutex_unlock(&(*phil)->env->write_mutex);
+		pthread_mutex_unlock(&(*phil)->env->dead_mutex);
 		return (1);
 	}
-	if (all_full == 1)
-		return (1);
+	pthread_mutex_unlock(&(*phil)->env->dead_mutex);
+	// if (all_full == 1)
+	// 	return (1);
 	return (0);
 }
 
@@ -52,36 +47,50 @@ long	get_time()
 	return (time.tv_usec * 0.001);
 }
 
-int	dead_check(unsigned int current, unsigned int last, unsigned int die_time)
+int	dead_check(long current, long last, unsigned int die_time)
 {
 	if ((current - last) > die_time)
 		return (1);
 	return (0);
 }
 
-void pickup_forks(t_phil **phil, unsigned int phil_nbr)
+int pickup_forks(t_phil **phil, unsigned int phil_nbr)
 {
-	(*phil)->state = HUNGRY;
 	if (phil_nbr == 1)
 	{
-		if (end_check(phil))
-			return ;
 		pthread_mutex_lock(&(*phil)->right_fork->mutex);
-		printf("%ld %u has taken the right fork %u\n", get_time(), phil_nbr, (*phil)->right_fork->fork);
 		if (end_check(phil))
-			return ;
+		{
+			pthread_mutex_unlock(&(*phil)->right_fork->mutex);
+			return (-5);
+		}
+		msg_write(phil, "has taken a right fork");
 		pthread_mutex_lock(&(*phil)->left_fork->mutex);
-		printf("%ld %u has taken the left fork %u\n", get_time(), phil_nbr, (*phil)->left_fork->fork);
+		if (end_check(phil))
+		{
+			pthread_mutex_unlock(&(*phil)->right_fork->mutex);
+			pthread_mutex_unlock(&(*phil)->left_fork->mutex);
+			return (-5);
+		}
+		msg_write(phil, "has taken a left fork");
 	}
 	else
 	{
-		if (end_check(phil))
-			return ;
 		pthread_mutex_lock(&(*phil)->left_fork->mutex);
-		printf("%ld %u has taken the left fork %u\n", get_time(), phil_nbr, (*phil)->left_fork->fork);
 		if (end_check(phil))
-			return ;
+		{
+			pthread_mutex_unlock(&(*phil)->left_fork->mutex);
+			return (-5);
+		}
+		msg_write(phil, "has taken a left fork");
 		pthread_mutex_lock(&(*phil)->right_fork->mutex);
-		printf("%ld %u has taken the right fork %u\n", get_time(), phil_nbr, (*phil)->right_fork->fork);
+		if (end_check(phil))
+		{
+			pthread_mutex_unlock(&(*phil)->left_fork->mutex);
+			pthread_mutex_unlock(&(*phil)->right_fork->mutex);
+			return (-5);
+		}
+		msg_write(phil, "has taken a right fork");
 	}
+	return (1);
 }
