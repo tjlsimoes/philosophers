@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/20 11:48:14 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/20 11:53:39 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct s_env
 	unsigned int	eat_time;
 	unsigned int	sleep_time;
 	long			must_meals;
-	// pthread_mutex_t	write_mutex;
+	pthread_mutex_t	write_mutex;
 	pthread_mutex_t	dead_mutex;
 }	t_env;
 
