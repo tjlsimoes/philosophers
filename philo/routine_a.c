@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:54:49 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/18 19:32:55 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/20 11:52:06 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	eat(t_phil **phil)
 	(*phil)->state = EATING;
 	printf("%ld %u is eating\n", get_time(), phil_nbr);
 	(*phil)->last_meal = get_time();
-	smart_sleep(phil, (*phil)->eat_time);
+	smart_sleep(phil, (*phil)->env->eat_time);
 	(*phil)->meals++;
 	if (end_check(phil))
 		return ;
@@ -35,7 +35,7 @@ void	rest(t_phil **phil)
 {
 	(*phil)->state = SLEEPING;
 	printf("%ld %u is sleeping\n", get_time(), (*phil)->phil);
-	smart_sleep(phil, (*phil)->sleep_time);
+	smart_sleep(phil, (*phil)->env->sleep_time);
 }
 
 void	think(t_phil **phil)
@@ -83,7 +83,7 @@ void	*routine(void *arg)
 	// tid = phil->thread_id;
 	// printf("%ld Thread [%ld]\n", get_time(), tid);
 
-	while (phil->meals < phil->must_meals)
+	while (phil->meals < phil->env->must_meals)
 	{
 		if (!action(eat, &phil))
 			break;

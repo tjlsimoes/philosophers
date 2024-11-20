@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:12:14 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/18 18:57:43 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/20 11:51:19 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ void	phil_lst_check(t_env **env, unsigned int lst_size)
 		printf("Fork to the right: %d\n", node->right_fork->fork);
 		printf("Philosopher to the left: %d\n", node->left_phil->phil);
 		printf("Philosopher to the right: %d\n", node->right_phil->phil);
-		printf("Time to die: %u\n", node->die_time);
-		printf("Time to eat: %u\n", node->eat_time);
-		printf("Time to sleep: %u\n", node->sleep_time);
-		printf("Necessary meals: %ld\n", node->must_meals);
+		printf("Time to die: %u\n", node->env->die_time);
+		printf("Time to eat: %u\n", node->env->eat_time);
+		printf("Time to sleep: %u\n", node->env->sleep_time);
+		printf("Necessary meals: %ld\n", node->env->must_meals);
 		node = node->right_phil;
 		i++;
 	}

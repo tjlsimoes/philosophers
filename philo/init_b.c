@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:15:49 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/20 11:42:41 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/20 11:49:19 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,12 @@ void	phil_lstadd_back(t_env **env, t_phil *new, unsigned int i)
 	if (!new)
 		phil_lst_error("Error initializing philosopher struct.", env, i);
 	new->phil = i;
-	new->nbr_phil = (*env)->nbr_phil;
-	new->die_time = (*env)->die_time;
-	new->eat_time = (*env)->eat_time;
-	new->sleep_time = (*env)->sleep_time;
-	new->must_meals = (*env)->must_meals;
+	new->env = *env;
+	// new->nbr_phil = (*env)->nbr_phil;
+	// new->die_time = (*env)->die_time;
+	// new->eat_time = (*env)->eat_time;
+	// new->sleep_time = (*env)->sleep_time;
+	// new->must_meals = (*env)->must_meals;
 	new->left_fork = get_fork_nbr(env, i - 1);
 	new->right_fork = get_fork_nbr(env, i);
 	node = (*env)->philosopher;

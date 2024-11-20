@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:55:53 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/18 19:37:08 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/20 11:50:12 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,18 @@ int	end_check(t_phil **phil)
 	i = 0;
 	all_full = 1;
 	node = *phil;
-	nbr_phil = (*phil)->nbr_phil;
+	nbr_phil = (*phil)->env->nbr_phil;
 	while (i < nbr_phil)
 	{
 		if (node->state == DEAD)
 			return (1);
-		if (node->meals != node->must_meals)
+		if (node->meals != node->env->must_meals)
 			all_full = 0;
 		node = node->right_phil;
 		i++;
 	}
 	if (dead_check(get_time(),
-		(*phil)->last_meal, (*phil)->die_time))
+		(*phil)->last_meal, (*phil)->env->die_time))
 	{
 		(*phil)->state = DEAD;
 		printf("%ld %u has died\n", get_time(), (*phil)->phil);

@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/20 11:44:22 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/20 11:48:14 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,15 @@ typedef struct s_phil
 {
 	unsigned int	phil;
 	pthread_t		thread_id;
+	struct s_env	*env;
 	t_state			state;
 	unsigned int	meals;
 	long			last_meal;
-	unsigned int	die_time;
-	unsigned int	eat_time;
-	unsigned int	sleep_time;
-	long			must_meals;
-	unsigned int	nbr_phil;
+	// unsigned int	die_time;
+	// unsigned int	eat_time;
+	// unsigned int	sleep_time;
+	// long			must_meals;
+	// unsigned int	nbr_phil;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
 	struct s_phil	*left_phil;
@@ -69,11 +70,14 @@ typedef struct s_env
 {
 	t_fork			*fork;
 	t_phil			*philosopher;
+	int				dead;
 	unsigned int	nbr_phil;
 	unsigned int	die_time;
 	unsigned int	eat_time;
 	unsigned int	sleep_time;
 	long			must_meals;
+	// pthread_mutex_t	write_mutex;
+	pthread_mutex_t	dead_mutex;
 }	t_env;
 
 // Initial Error Check
