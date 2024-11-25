@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/25 10:51:29 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/25 11:58:05 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,6 @@ int				eat_smart_sleep(t_phil **phil, unsigned int time);
 void			msg_write(t_phil **phil, char *str);
 int				full_check(t_phil **phil);
 void			release_forks(t_phil **phil);
+int				one_phil_check(t_phil **phil);
 
 #endif

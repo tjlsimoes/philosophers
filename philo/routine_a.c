@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:54:49 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/25 11:31:01 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/25 11:58:23 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	*routine(void *arg)
 
 	phil = (t_phil *)arg;
 
+	if (one_phil_check(&phil))
+		return (NULL);
 	while (1)
 	{
 		if (!action(eat, &phil))
