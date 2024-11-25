@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/25 12:11:11 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/25 15:12:26 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_phil
 
 typedef struct s_env
 {
+	long long		ini_time;
 	t_fork			*fork;
 	t_phil			*philosopher;
 	int				dead;

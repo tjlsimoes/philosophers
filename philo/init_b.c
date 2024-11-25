@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:15:49 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/25 12:11:47 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/25 15:12:47 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,18 +71,17 @@ void	phil_last_link(t_env **env)
 void	create_threads(t_env **env, unsigned int lst_size)
 {
 	t_phil			*node;
-	long long		ini_time;
 	unsigned int	i;
 
 	node = (*env)->philosopher;
-	ini_time = get_time();
+	(*env)->ini_time = get_time();
 	if (!node)
 		return ;
 	// printf("Last meal value: %d\n", node->last_meal);
 	i = 1;
 	while (i <= lst_size)
 	{
-		node->last_meal = ini_time;
+		node->last_meal = (*env)->ini_time;
 		pthread_create(&node->thread_id, NULL, routine, node);
 		node = node->right_phil;
 		i++;
