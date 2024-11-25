@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 11:50:10 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/25 11:57:29 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/25 12:12:36 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	one_phil_check(t_phil **phil)
 	pthread_mutex_lock(&(*phil)->env->dead_mutex);
 	(*phil)->env->dead = 1;
 	pthread_mutex_lock(&(*phil)->env->write_mutex);
-	printf("%ld %u has died\n", get_time(), (*phil)->phil);
+	printf("%lld %u has died\n", get_time(), (*phil)->phil);
 	pthread_mutex_unlock(&(*phil)->env->write_mutex);
 	pthread_mutex_unlock(&(*phil)->env->dead_mutex);
 	return (1);

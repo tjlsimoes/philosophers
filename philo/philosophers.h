@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/25 11:58:05 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/25 12:11:11 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_phil
 	pthread_t		thread_id;
 	struct s_env	*env;
 	long			meals;
-	long			last_meal;
+	long long		last_meal;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
 	struct s_phil	*left_phil;
@@ -92,8 +92,8 @@ t_fork			*get_fork_nbr(t_env **env, unsigned int nbr);
 void			create_threads(t_env **env, unsigned int lst_size);
 void			join_threads(t_env **env, unsigned int lst_size);
 
-int				dead_check(long current, long last, unsigned int die_time);
-long			get_time();
+int				dead_check(long long current, long long last, unsigned int die_time);
+long long		get_time();
 void			eat(t_phil **phil);
 void			rest(t_phil **phil);
 void			think(t_phil **phil);

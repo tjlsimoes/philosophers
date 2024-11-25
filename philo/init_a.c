@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:12:14 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/25 11:44:48 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/25 12:09:32 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,3 @@ void	phil_lst_check(t_env **env, unsigned int lst_size)
 		i++;
 	}
 }
-
-// int	one_phil_check(char *nbr_phil)
-// {
-// 	if (atui(nbr_phil) == 1)
-// 	{
-// 		printf("%ld %u has taken a fork\n", get_time(), (*phil)->phil, str);
-// 	}
-// 	return (0);
-// }

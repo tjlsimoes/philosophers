@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:55:53 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/25 11:48:05 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/25 12:12:16 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	end_check(t_phil **phil)
 	{
 		(*phil)->env->dead = 1;
 		pthread_mutex_lock(&(*phil)->env->write_mutex);
-		printf("%ld %u has died\n", get_time(), (*phil)->phil);
+		printf("%lld %u has died\n", get_time(), (*phil)->phil);
 		pthread_mutex_unlock(&(*phil)->env->write_mutex);
 		pthread_mutex_unlock(&(*phil)->env->dead_mutex);
 		pthread_mutex_unlock(&(*phil)->env->full_mutex);
@@ -38,15 +38,15 @@ int	end_check(t_phil **phil)
 	return (0);
 }
 
-long	get_time()
+long long	get_time()
 {
 	struct timeval	time;
 
 	gettimeofday(&time, NULL);
-	return (time.tv_usec * 0.001);
+	return (time.tv_sec * 1000 + time.tv_usec * 0.001);
 }
 
-int	dead_check(long current, long last, unsigned int die_time)
+int	dead_check(long long current, long long last, unsigned int die_time)
 {
 	if ((current - last) > die_time)
 		return (1);

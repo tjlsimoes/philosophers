@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:15:49 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/20 18:03:22 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/25 12:11:47 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	phil_last_link(t_env **env)
 void	create_threads(t_env **env, unsigned int lst_size)
 {
 	t_phil			*node;
-	long		ini_time;
+	long long		ini_time;
 	unsigned int	i;
 
 	node = (*env)->philosopher;

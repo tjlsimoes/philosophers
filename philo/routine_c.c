@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:59:08 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/25 11:18:14 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/25 12:12:22 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	msg_write(t_phil **phil, char *str)
     }
 
 	pthread_mutex_lock(&(*phil)->env->write_mutex);
-	printf("%ld %u %s\n", get_time(), (*phil)->phil, str);
+	printf("%lld %u %s\n", get_time(), (*phil)->phil, str);
 	pthread_mutex_unlock(&(*phil)->env->write_mutex);
 
     pthread_mutex_unlock(&(*phil)->env->dead_mutex);
