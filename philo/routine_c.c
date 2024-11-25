@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:59:08 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/20 18:54:21 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/25 11:18:14 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,31 @@ void	msg_write(t_phil **phil, char *str)
 	pthread_mutex_unlock(&(*phil)->env->write_mutex);
 
     pthread_mutex_unlock(&(*phil)->env->dead_mutex);
+}
+
+int	full_check(t_phil **phil)
+{
+	if ((*phil)->meals == (*phil)->env->must_meals
+		&& (*phil)->env->must_meals != - 1)
+			return (1);
+	return (0);
+}
+
+void	release_forks(t_phil **phil)
+{
+	if (end_check(phil))
+	{
+		pthread_mutex_unlock(&(*phil)->left_fork->mutex);
+		pthread_mutex_unlock(&(*phil)->right_fork->mutex);
+		return ;
+	}
+	pthread_mutex_unlock(&(*phil)->right_fork->mutex);
+	msg_write(phil, "has released a right fork");
+	if (end_check(phil))
+	{
+		pthread_mutex_unlock(&(*phil)->left_fork->mutex);
+		return ;
+	}
+	pthread_mutex_unlock(&(*phil)->left_fork->mutex);
+	msg_write(phil, "has released a left fork");
 }

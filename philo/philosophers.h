@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/20 18:54:52 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/25 10:51:29 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_phil
 	unsigned int	phil;
 	pthread_t		thread_id;
 	struct s_env	*env;
-	unsigned int	meals;
+	long			meals;
 	long			last_meal;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
@@ -49,13 +49,15 @@ typedef struct s_env
 	t_fork			*fork;
 	t_phil			*philosopher;
 	int				dead;
+	unsigned int	full;
 	unsigned int	nbr_phil;
 	unsigned int	die_time;
 	unsigned int	eat_time;
 	unsigned int	sleep_time;
-	unsigned int	must_meals;
+	long			must_meals;
 	pthread_mutex_t	write_mutex;
 	pthread_mutex_t	dead_mutex;
+	pthread_mutex_t	full_mutex;
 }	t_env;
 
 // Initial Error Check
@@ -103,5 +105,7 @@ int				pickup_forks(t_phil **phil, unsigned int phil_nbr);
 void			smart_sleep(t_phil **phil, unsigned int time);
 int				eat_smart_sleep(t_phil **phil, unsigned int time);
 void			msg_write(t_phil **phil, char *str);
+int				full_check(t_phil **phil);
+void			release_forks(t_phil **phil);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:54:49 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/20 18:35:28 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/25 11:31:01 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,13 @@ void	eat(t_phil **phil)
 	if (!eat_smart_sleep(phil, (*phil)->env->eat_time))
 		return ;
 	(*phil)->meals++;
-	if (end_check(phil))
+	if (full_check(phil))
 	{
-		pthread_mutex_unlock(&(*phil)->left_fork->mutex);
-		pthread_mutex_unlock(&(*phil)->right_fork->mutex);
-		return ;
+		pthread_mutex_lock(&(*phil)->env->full_mutex);
+		(*phil)->env->full += 1;
+		pthread_mutex_unlock(&(*phil)->env->full_mutex);	
 	}
-	pthread_mutex_unlock(&(*phil)->right_fork->mutex);
-	msg_write(phil, "has released a right fork");
-	if (end_check(phil))
-	{
-		pthread_mutex_unlock(&(*phil)->left_fork->mutex);
-		return ;
-	}
-	pthread_mutex_unlock(&(*phil)->left_fork->mutex);
-	msg_write(phil, "has released a left fork");
+	release_forks(phil);
 }
 
 void	rest(t_phil **phil)
@@ -69,16 +61,20 @@ int	action(void (*f)(t_phil **), t_phil **phil)
 
 void	*routine(void *arg)
 {
-	// pthread_t 	tid;
 	t_phil		*phil;
 
 	phil = (t_phil *)arg;
-	// tid = phil->thread_id;
-	// printf("%ld Thread [%ld]\n", get_time(), tid);
 
-	while (phil->meals < phil->env->must_meals)
+	while (1)
 	{
 		if (!action(eat, &phil))
+			break;
+		// pthread_mutex_lock(&phil->env->write_mutex);
+		// pthread_mutex_lock(&phil->env->full_mutex);
+		// printf("Phil %u, meals %ld, must_meals %ld, env->full %u\n", phil->phil, phil->meals, phil->env->must_meals, phil->env->full);
+		// pthread_mutex_unlock(&phil->env->full_mutex);
+		// pthread_mutex_unlock(&phil->env->write_mutex);
+		if (full_check(&phil))
 			break;
 		if (!action(rest, &phil))
 			break;

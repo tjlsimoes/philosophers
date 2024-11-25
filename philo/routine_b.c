@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:55:53 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/20 18:48:58 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/25 11:31:34 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 int	end_check(t_phil **phil)
 {
-	// int				all_full;
-
-	// all_full = 1;
 	pthread_mutex_lock(&(*phil)->env->dead_mutex);
-	if ((*phil)->env->dead != 0)
+	pthread_mutex_lock(&(*phil)->env->full_mutex);
+	if ((*phil)->env->dead != 0 || (*phil)->env->full == (*phil)->env->nbr_phil)
 	{
 		pthread_mutex_unlock(&(*phil)->env->dead_mutex);
+		pthread_mutex_unlock(&(*phil)->env->full_mutex);
 		return (1);
 	}
 	if (dead_check(get_time(),
@@ -31,11 +30,11 @@ int	end_check(t_phil **phil)
 		printf("%ld %u has died\n", get_time(), (*phil)->phil);
 		pthread_mutex_unlock(&(*phil)->env->write_mutex);
 		pthread_mutex_unlock(&(*phil)->env->dead_mutex);
+		pthread_mutex_unlock(&(*phil)->env->full_mutex);
 		return (1);
 	}
+	pthread_mutex_unlock(&(*phil)->env->full_mutex);
 	pthread_mutex_unlock(&(*phil)->env->dead_mutex);
-	// if (all_full == 1)
-	// 	return (1);
 	return (0);
 }
 
