@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine_c.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:59:08 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/27 10:18:28 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/27 11:12:30 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	eat_smart_sleep(t_phil **phil, unsigned int time)
 			pthread_mutex_unlock(&(*phil)->left_fork->mutex);
 			return (0);
 		}
-			break ;
 		usleep(50);
 		i += 50;
 	}
