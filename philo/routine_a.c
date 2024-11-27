@@ -6,7 +6,7 @@
 /*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:54:49 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/27 11:59:10 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/27 15:40:44 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,19 @@ void	eat(t_phil **phil)
 	unsigned int	phil_nbr;
 
 	phil_nbr = (*phil)->phil;
-	if (pickup_forks(phil, phil_nbr) == -5)
-		return ;
-	if (end_check(phil))
-	{
-		pthread_mutex_unlock(&(*phil)->left_fork->mutex);
-		pthread_mutex_unlock(&(*phil)->right_fork->mutex);
-		return ;
-	}
+	// if (pickup_forks(phil, phil_nbr) == -5)
+	// 	return ;
+	pickup_forks(phil, phil_nbr);
+	// if (end_check(phil))
+	// {
+	// 	pthread_mutex_unlock(&(*phil)->left_fork->mutex);
+	// 	pthread_mutex_unlock(&(*phil)->right_fork->mutex);
+	// 	return ;
+	// }
 	msg_write(phil, "is eating");
-	(*phil)->last_meal = get_time();
 	if (!eat_smart_sleep(phil, (*phil)->env->eat_time))
 		return ;
+	(*phil)->last_meal = get_time();
 	(*phil)->meals++;
 	if (full_check(phil))
 	{
@@ -36,7 +37,8 @@ void	eat(t_phil **phil)
 		(*phil)->env->full += 1;
 		pthread_mutex_unlock(&(*phil)->env->full_mutex);	
 	}
-	release_forks(phil);
+	pthread_mutex_unlock(&(*phil)->right_fork->mutex);
+	pthread_mutex_unlock(&(*phil)->left_fork->mutex);
 }
 
 void	rest(t_phil **phil)
@@ -78,7 +80,7 @@ void	*routine(void *arg)
 		// printf("Phil %u, meals %ld, must_meals %ld, env->full %u\n", phil->phil, phil->meals, phil->env->must_meals, phil->env->full);
 		// pthread_mutex_unlock(&phil->env->full_mutex);
 		// pthread_mutex_unlock(&phil->env->write_mutex);
-		if (full_check(&phil))
+		if (full_check(&phil))	// Possible need to remove this break condition
 			break;
 		if (!action(rest, &phil))
 			break;

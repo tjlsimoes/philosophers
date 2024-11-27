@@ -6,7 +6,7 @@
 /*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:55:53 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/27 15:46:10 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/27 16:08:55 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,25 @@ int	end_check(t_phil **phil)
 		return (1);
 	}
 	pthread_mutex_unlock(&(*phil)->env->full_mutex);
-	pthread_mutex_unlock(&(*phil)->env->dead_mutex);
+	// pthread_mutex_unlock(&(*phil)->env->dead_mutex);
+
 	// pthread_mutex_lock(&(*phil)->env->write_mutex);
 	// long current = get_time();
-	// // printf("Phil %u: %ld - %ld = %ld\n", (*phil)->phil, current, (*phil)->last_meal, current - (*phil)->last_meal);
+	// printf("Phil %u: %ld - %ld = %ld\n", (*phil)->phil, current, (*phil)->last_meal, current - (*phil)->last_meal);
 	// printf("%u %ld - %ld = %ld, die time: %ld\n", (*phil)->phil, current, (*phil)->last_meal, current - (*phil)->last_meal, (*phil)->env->die_time);
 	// pthread_mutex_unlock(&(*phil)->env->write_mutex);
 	if (dead_check(get_time(),
 		(*phil)->last_meal, (*phil)->env->die_time))
 	{
-		pthread_mutex_lock(&(*phil)->env->dead_mutex);
+		// pthread_mutex_lock(&(*phil)->env->dead_mutex);
 		(*phil)->env->dead = 1;
-		pthread_mutex_unlock(&(*phil)->env->dead_mutex);
 		pthread_mutex_lock(&(*phil)->env->write_mutex);
 		printf("%ld %u died\n", get_time() - (*phil)->env->ini_time, (*phil)->phil);
 		pthread_mutex_unlock(&(*phil)->env->write_mutex);
+		pthread_mutex_unlock(&(*phil)->env->dead_mutex);
 		return (1);
 	}
+	pthread_mutex_unlock(&(*phil)->env->dead_mutex);
 	return (0);
 }
 
@@ -63,37 +65,37 @@ int pickup_forks(t_phil **phil, unsigned int phil_nbr)
 	if (phil_nbr % 2 != 0)
 	{
 		pthread_mutex_lock(&(*phil)->right_fork->mutex);
-		if (end_check(phil))
-		{
-			pthread_mutex_unlock(&(*phil)->right_fork->mutex);
-			return (-5);
-		}
+		// if (end_check(phil))
+		// {
+		// 	pthread_mutex_unlock(&(*phil)->right_fork->mutex);
+		// 	return (-5);
+		// }
 		msg_write(phil, "has taken a fork");
 		pthread_mutex_lock(&(*phil)->left_fork->mutex);
-		if (end_check(phil))
-		{
-			pthread_mutex_unlock(&(*phil)->right_fork->mutex);
-			pthread_mutex_unlock(&(*phil)->left_fork->mutex);
-			return (-5);
-		}
+		// if (end_check(phil))
+		// {
+		// 	pthread_mutex_unlock(&(*phil)->right_fork->mutex);
+		// 	pthread_mutex_unlock(&(*phil)->left_fork->mutex);
+		// 	return (-5);
+		// }
 		msg_write(phil, "has taken a fork");
 	}
 	else
 	{
 		pthread_mutex_lock(&(*phil)->left_fork->mutex);
-		if (end_check(phil))
-		{
-			pthread_mutex_unlock(&(*phil)->left_fork->mutex);
-			return (-5);
-		}
+		// if (end_check(phil))
+		// {
+		// 	pthread_mutex_unlock(&(*phil)->left_fork->mutex);
+		// 	return (-5);
+		// }
 		msg_write(phil, "has taken a fork");
 		pthread_mutex_lock(&(*phil)->right_fork->mutex);
-		if (end_check(phil))
-		{
-			pthread_mutex_unlock(&(*phil)->left_fork->mutex);
-			pthread_mutex_unlock(&(*phil)->right_fork->mutex);
-			return (-5);
-		}
+		// if (end_check(phil))
+		// {
+		// 	pthread_mutex_unlock(&(*phil)->left_fork->mutex);
+		// 	pthread_mutex_unlock(&(*phil)->right_fork->mutex);
+		// 	return (-5);
+		// }
 		msg_write(phil, "has taken a fork");
 	}
 	return (1);

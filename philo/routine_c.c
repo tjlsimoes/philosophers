@@ -6,7 +6,7 @@
 /*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:59:08 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/27 12:05:45 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/27 15:52:07 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,28 +32,27 @@ void	smart_sleep(t_phil **phil,long time)
 int	eat_smart_sleep(t_phil **phil, long time)
 {
 
-	if (end_check(phil))
-	{
-		pthread_mutex_unlock(&(*phil)->right_fork->mutex);
-		pthread_mutex_unlock(&(*phil)->left_fork->mutex);
-		return (0);
-	}
+	// if (end_check(phil))
+	// {
+	// 	pthread_mutex_unlock(&(*phil)->right_fork->mutex);
+	// 	pthread_mutex_unlock(&(*phil)->left_fork->mutex);
+	// 	return (0);
+	// }
 	time = get_time() + time;
 	while (1)
 	{
 		// printf("Greater than: %ld %ld\n", get_time(), time);
-		if (get_time() > time)
-			break;
 		if (end_check(phil))
 		{
 			pthread_mutex_unlock(&(*phil)->right_fork->mutex);
 			pthread_mutex_unlock(&(*phil)->left_fork->mutex);
 			return (0);
 		}
+		if (get_time() > time)
+			return (1);
 		usleep(500);
 		// printf("Here 2\n");
 	}
-	return (1);
 }
 
 
@@ -76,8 +75,8 @@ void	msg_write(t_phil **phil, char *str)
 
 int	full_check(t_phil **phil)
 {
-	if ((*phil)->meals == (*phil)->env->must_meals
-		&& (*phil)->env->must_meals != - 1)
+	if ((*phil)->env->must_meals != - 1
+		&& (*phil)->meals == (*phil)->env->must_meals)
 			return (1);
 	return (0);
 }
