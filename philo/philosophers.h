@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/25 15:12:26 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/27 10:07:00 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_phil
 	pthread_t		thread_id;
 	struct s_env	*env;
 	long			meals;
-	long long		last_meal;
+	long		last_meal;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
 	struct s_phil	*left_phil;
@@ -46,15 +46,15 @@ typedef struct s_phil
 
 typedef struct s_env
 {
-	long long		ini_time;
+	long		ini_time;
 	t_fork			*fork;
 	t_phil			*philosopher;
 	int				dead;
 	unsigned int	full;
 	unsigned int	nbr_phil;
-	unsigned int	die_time;
-	unsigned int	eat_time;
-	unsigned int	sleep_time;
+	long		die_time;
+	long		eat_time;
+	long		sleep_time;
 	long			must_meals;
 	pthread_mutex_t	write_mutex;
 	pthread_mutex_t	dead_mutex;
@@ -93,8 +93,8 @@ t_fork			*get_fork_nbr(t_env **env, unsigned int nbr);
 void			create_threads(t_env **env, unsigned int lst_size);
 void			join_threads(t_env **env, unsigned int lst_size);
 
-int				dead_check(long long current, long long last, unsigned int die_time);
-long long		get_time();
+int				dead_check(long current, long last, long die_time);
+long		get_time();
 void			eat(t_phil **phil);
 void			rest(t_phil **phil);
 void			think(t_phil **phil);

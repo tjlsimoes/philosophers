@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:55:53 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/25 15:17:48 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/27 10:06:59 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,28 @@ int	end_check(t_phil **phil)
 		pthread_mutex_unlock(&(*phil)->env->full_mutex);
 		return (1);
 	}
+	pthread_mutex_unlock(&(*phil)->env->full_mutex);
+	pthread_mutex_unlock(&(*phil)->env->dead_mutex);
+	// pthread_mutex_lock(&(*phil)->env->write_mutex);
+	// long current = get_time();
+	// // printf("Phil %u: %ld - %ld = %ld\n", (*phil)->phil, current, (*phil)->last_meal, current - (*phil)->last_meal);
+	// printf("%u %ld - %ld = %ld, die time: %ld\n", (*phil)->phil, current, (*phil)->last_meal, current - (*phil)->last_meal, (*phil)->env->die_time);
+	// pthread_mutex_unlock(&(*phil)->env->write_mutex);
 	if (dead_check(get_time(),
 		(*phil)->last_meal, (*phil)->env->die_time))
 	{
+		pthread_mutex_lock(&(*phil)->env->dead_mutex);
 		(*phil)->env->dead = 1;
-		pthread_mutex_lock(&(*phil)->env->write_mutex);
-		printf("%lld %u has died\n", get_time() - (*phil)->env->ini_time, (*phil)->phil);
-		pthread_mutex_unlock(&(*phil)->env->write_mutex);
 		pthread_mutex_unlock(&(*phil)->env->dead_mutex);
-		pthread_mutex_unlock(&(*phil)->env->full_mutex);
+		pthread_mutex_lock(&(*phil)->env->write_mutex);
+		printf("%ld %u has died\n", get_time() - (*phil)->last_meal, (*phil)->phil);
+		pthread_mutex_unlock(&(*phil)->env->write_mutex);
 		return (1);
 	}
-	pthread_mutex_unlock(&(*phil)->env->full_mutex);
-	pthread_mutex_unlock(&(*phil)->env->dead_mutex);
 	return (0);
 }
 
-long long	get_time()
+long	get_time()
 {
 	struct timeval	time;
 
@@ -46,7 +51,7 @@ long long	get_time()
 	return (time.tv_sec * 1000 + time.tv_usec * 0.001);
 }
 
-int	dead_check(long long current, long long last, unsigned int die_time)
+int	dead_check(long current, long last, long die_time)
 {
 	if ((current - last) > die_time)
 		return (1);

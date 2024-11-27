@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 11:50:10 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/25 15:13:50 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/25 19:05:49 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int	one_phil_check(t_phil **phil)
 	if ((*phil)->env->nbr_phil != 1)
 		return (0);
 	msg_write(phil, "has taken a right fork");
-	usleep((*phil)->env->die_time);
+	usleep((*phil)->env->die_time * 1000);
+	printf("%ld %u has died\n", get_time() - (*phil)->env->ini_time, (*phil)->phil);
 	pthread_mutex_lock(&(*phil)->env->dead_mutex);
 	(*phil)->env->dead = 1;
 	pthread_mutex_lock(&(*phil)->env->write_mutex);
-	printf("%lld %u has died\n", get_time() - (*phil)->env->ini_time, (*phil)->phil);
 	pthread_mutex_unlock(&(*phil)->env->write_mutex);
 	pthread_mutex_unlock(&(*phil)->env->dead_mutex);
 	return (1);

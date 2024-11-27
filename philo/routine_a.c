@@ -6,7 +6,7 @@
 /*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:54:49 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/25 11:58:23 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/25 17:00:34 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	eat(t_phil **phil)
 	}
 	msg_write(phil, "is eating");
 	(*phil)->last_meal = get_time();
-	if (!eat_smart_sleep(phil, (*phil)->env->eat_time))
+	if (!eat_smart_sleep(phil, (*phil)->env->eat_time * 1000))
 		return ;
 	(*phil)->meals++;
 	if (full_check(phil))
@@ -42,13 +42,13 @@ void	eat(t_phil **phil)
 void	rest(t_phil **phil)
 {
 	msg_write(phil, "is sleeping");
-	smart_sleep(phil, (*phil)->env->sleep_time);
+	smart_sleep(phil, (*phil)->env->sleep_time * 1000);
 }
 
 void	think(t_phil **phil)
 {
 	msg_write(phil, "is thinking");
-	// smart_sleep(phil, THINK_TIME);
+	// smart_sleep(phil, THINK_TIME * 1000);
 }
 
 int	action(void (*f)(t_phil **), t_phil **phil)
