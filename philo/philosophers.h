@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/27 10:07:00 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/27 11:39:01 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ void			*routine(void *arg);
 int				action(void (*f)(t_phil **), t_phil **phil);
 int				end_check(t_phil **phil);
 int				pickup_forks(t_phil **phil, unsigned int phil_nbr);
-void			smart_sleep(t_phil **phil, unsigned int time);
-int				eat_smart_sleep(t_phil **phil, unsigned int time);
+void			smart_sleep(t_phil **phil, long time);
+int				eat_smart_sleep(t_phil **phil, long time);
 void			msg_write(t_phil **phil, char *str);
 int				full_check(t_phil **phil);
 void			release_forks(t_phil **phil);

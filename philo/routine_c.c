@@ -6,33 +6,31 @@
 /*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:59:08 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/27 11:12:30 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/27 12:05:45 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	smart_sleep(t_phil **phil, unsigned int time)
+void	smart_sleep(t_phil **phil,long time)
 {
-	unsigned int	i;
 
 	if (end_check(phil))
 		return ;
-	i = 0;
-	while (i < time)
+	time = get_time() + time;
+	while (1)
 	{
-		if (i > time)
+		if (get_time() > time)
 			break;
 		if (end_check(phil))
 			break ;
-		usleep(50);
-		i += 50;
+		usleep(500);
+		// printf("Here 1\n");
 	}
 }
 
-int	eat_smart_sleep(t_phil **phil, unsigned int time)
+int	eat_smart_sleep(t_phil **phil, long time)
 {
-	unsigned int	i;
 
 	if (end_check(phil))
 	{
@@ -40,10 +38,11 @@ int	eat_smart_sleep(t_phil **phil, unsigned int time)
 		pthread_mutex_unlock(&(*phil)->left_fork->mutex);
 		return (0);
 	}
-	i = 0;
-	while (i < time)
+	time = get_time() + time;
+	while (1)
 	{
-		if (i > time)
+		// printf("Greater than: %ld %ld\n", get_time(), time);
+		if (get_time() > time)
 			break;
 		if (end_check(phil))
 		{
@@ -51,8 +50,8 @@ int	eat_smart_sleep(t_phil **phil, unsigned int time)
 			pthread_mutex_unlock(&(*phil)->left_fork->mutex);
 			return (0);
 		}
-		usleep(50);
-		i += 50;
+		usleep(500);
+		// printf("Here 2\n");
 	}
 	return (1);
 }
@@ -92,12 +91,12 @@ void	release_forks(t_phil **phil)
 		return ;
 	}
 	pthread_mutex_unlock(&(*phil)->right_fork->mutex);
-	msg_write(phil, "has released a right fork");
+	// msg_write(phil, "has released a fork");
 	if (end_check(phil))
 	{
 		pthread_mutex_unlock(&(*phil)->left_fork->mutex);
 		return ;
 	}
 	pthread_mutex_unlock(&(*phil)->left_fork->mutex);
-	msg_write(phil, "has released a left fork");
+	// msg_write(phil, "has released a fork");
 }

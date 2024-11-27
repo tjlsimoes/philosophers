@@ -6,7 +6,7 @@
 /*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:55:53 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/27 11:14:41 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/27 12:16:38 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	end_check(t_phil **phil)
 		(*phil)->env->dead = 1;
 		pthread_mutex_unlock(&(*phil)->env->dead_mutex);
 		pthread_mutex_lock(&(*phil)->env->write_mutex);
-		printf("%ld %u has died\n", get_time() - (*phil)->last_meal, (*phil)->phil);
+		printf("%ld %u died\n", get_time() - (*phil)->last_meal, (*phil)->phil);
 		pthread_mutex_unlock(&(*phil)->env->write_mutex);
 		return (1);
 	}
@@ -48,7 +48,7 @@ long	get_time()
 	struct timeval	time;
 
 	gettimeofday(&time, NULL);
-	return (time.tv_sec * 1000 + time.tv_usec * 0.001);
+	return (time.tv_sec * 1000  + time.tv_usec * 0.001);
 }
 
 int	dead_check(long current, long last, long die_time)
@@ -60,7 +60,7 @@ int	dead_check(long current, long last, long die_time)
 
 int pickup_forks(t_phil **phil, unsigned int phil_nbr)
 {
-	if (phil_nbr == 1)
+	if (phil_nbr % 2 != 0)
 	{
 		pthread_mutex_lock(&(*phil)->right_fork->mutex);
 		if (end_check(phil))
@@ -68,7 +68,7 @@ int pickup_forks(t_phil **phil, unsigned int phil_nbr)
 			pthread_mutex_unlock(&(*phil)->right_fork->mutex);
 			return (-5);
 		}
-		msg_write(phil, "has taken a right fork");
+		msg_write(phil, "has taken a fork");
 		pthread_mutex_lock(&(*phil)->left_fork->mutex);
 		if (end_check(phil))
 		{
@@ -76,7 +76,7 @@ int pickup_forks(t_phil **phil, unsigned int phil_nbr)
 			pthread_mutex_unlock(&(*phil)->left_fork->mutex);
 			return (-5);
 		}
-		msg_write(phil, "has taken a left fork");
+		msg_write(phil, "has taken a fork");
 	}
 	else
 	{
@@ -86,7 +86,7 @@ int pickup_forks(t_phil **phil, unsigned int phil_nbr)
 			pthread_mutex_unlock(&(*phil)->left_fork->mutex);
 			return (-5);
 		}
-		msg_write(phil, "has taken a left fork");
+		msg_write(phil, "has taken a fork");
 		pthread_mutex_lock(&(*phil)->right_fork->mutex);
 		if (end_check(phil))
 		{
@@ -94,7 +94,7 @@ int pickup_forks(t_phil **phil, unsigned int phil_nbr)
 			pthread_mutex_unlock(&(*phil)->right_fork->mutex);
 			return (-5);
 		}
-		msg_write(phil, "has taken a right fork");
+		msg_write(phil, "has taken a fork");
 	}
 	return (1);
 }
