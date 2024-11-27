@@ -6,7 +6,7 @@
 /*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:55:53 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/27 12:16:38 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/27 15:46:10 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	end_check(t_phil **phil)
 		(*phil)->env->dead = 1;
 		pthread_mutex_unlock(&(*phil)->env->dead_mutex);
 		pthread_mutex_lock(&(*phil)->env->write_mutex);
-		printf("%ld %u died\n", get_time() - (*phil)->last_meal, (*phil)->phil);
+		printf("%ld %u died\n", get_time() - (*phil)->env->ini_time, (*phil)->phil);
 		pthread_mutex_unlock(&(*phil)->env->write_mutex);
 		return (1);
 	}
