@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/12/04 11:50:55 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/12/04 13:53:33 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
+
 # include <limits.h>
 # include <string.h>
 # include <stdlib.h>
@@ -19,9 +20,9 @@
 # include <stdio.h>
 # include <sys/time.h>
 # include <pthread.h>
-#ifndef THINK_TIME
-# define THINK_TIME 10
-#endif
+# ifndef THINK_TIME
+#  define THINK_TIME 10
+# endif
 
 typedef struct s_fork
 {
@@ -36,25 +37,25 @@ typedef struct s_phil
 	pthread_t		thread_id;
 	struct s_env	*env;
 	long			meals;
-	long		last_meal;
+	long			last_meal;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
 	struct s_phil	*left_phil;
 	struct s_phil	*right_phil;
-	
+
 }	t_phil;
 
 typedef struct s_env
 {
-	long		ini_time;
+	long			ini_time;
 	t_fork			*fork;
 	t_phil			*philosopher;
 	int				dead;
 	unsigned int	full;
 	unsigned int	nbr_phil;
-	long		die_time;
-	long		eat_time;
-	long		sleep_time;
+	long			die_time;
+	long			eat_time;
+	long			sleep_time;
 	long			must_meals;
 	pthread_mutex_t	write_mutex;
 	pthread_mutex_t	state_mutex;
@@ -66,7 +67,7 @@ void			check_args(int argc, char **argv);
 void			error(char *error_msg);
 void			phil_lst_error(char *error_msg,
 					t_env **env, unsigned int idx);
-void			fork_lst_error(char *error_msg, 
+void			fork_lst_error(char *error_msg,
 					t_env **env, unsigned int idx);
 int				ft_isspace(char c);
 int				ft_strlen(char *str);
@@ -93,7 +94,7 @@ void			create_threads(t_env **env, unsigned int lst_size);
 void			join_threads(t_env **env, unsigned int lst_size);
 
 int				dead_check(long current, long last, long die_time);
-long		get_time();
+long			get_time(void);
 void			eat(t_phil **phil);
 void			rest(t_phil **phil);
 void			think(t_phil **phil);
