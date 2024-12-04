@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine_d.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 11:50:10 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/27 18:44:23 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/12/04 14:02:50 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,11 @@ int	one_phil_check(t_phil **phil)
 	pthread_mutex_unlock(&(*phil)->env->write_mutex);
 	pthread_mutex_unlock(&(*phil)->env->state_mutex);
 	return (1);
+}
+
+void	update_env_full(t_phil **phil)
+{
+	pthread_mutex_lock(&(*phil)->env->state_mutex);
+	(*phil)->env->full += 1;
+	pthread_mutex_unlock(&(*phil)->env->state_mutex);
 }

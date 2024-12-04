@@ -6,7 +6,7 @@
 /*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/12/04 13:55:19 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/12/04 14:03:09 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,6 @@ int				full_check(t_phil **phil);
 void			release_forks(t_phil **phil);
 int				one_phil_check(t_phil **phil);
 int				general_full_check(t_phil **phil, int i);
+void			update_env_full(t_phil **phil);
 
 #endif
