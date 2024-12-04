@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_b.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:15:49 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/25 15:12:47 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/12/04 13:48:44 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	create_threads(t_env **env, unsigned int lst_size)
 	(*env)->ini_time = get_time();
 	if (!node)
 		return ;
-	// printf("Last meal value: %d\n", node->last_meal);
 	i = 1;
 	while (i <= lst_size)
 	{
@@ -104,4 +103,3 @@ void	join_threads(t_env **env, unsigned int lst_size)
 		i++;
 	}
 }
-
