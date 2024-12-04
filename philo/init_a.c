@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_a.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 11:12:14 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/25 16:19:47 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/12/04 13:47:01 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,31 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		return (array);
 	memset(array, 0, nmemb * size);
 	return (array);
+}
+
+int	ft_isspace(char c)
+{
+	if (c == ' ' || (c >= 9 && c <= 13))
+		return (1);
+	return (0);
+}
+
+int	is_posnbr(char *nptr)
+{
+	int		nbr;
+
+	if (!nptr)
+		return (0);
+	nbr = 0;
+	while (ft_isspace(*nptr))
+		nptr++;
+	if (*nptr == '-')
+		return (0);
+	else if (*nptr == '+')
+		nptr++;
+	if (*nptr >= '0' && *nptr <= '9')
+		nbr = 1;
+	return (nbr);
 }
 
 unsigned int	atui(char *nptr)

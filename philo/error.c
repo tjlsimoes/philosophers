@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:51:30 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/11 19:14:48 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/12/04 13:46:55 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,29 +43,4 @@ void	phil_lst_error(char *error_msg, t_env **env, unsigned int idx)
 	phil_lstclear(env, idx);
 	free(env);
 	error(error_msg);
-}
-
-int	ft_isspace(char c)
-{
-	if (c == ' ' || (c >= 9 && c <= 13))
-		return (1);
-	return (0);
-}
-
-int	is_posnbr(char *nptr)
-{
-	int		nbr;
-
-	if (!nptr)
-		return (0);
-	nbr = 0;
-	while (ft_isspace(*nptr))
-		nptr++;
-	if (*nptr == '-')
-		return (0);
-	else if (*nptr == '+')
-		nptr++;
-	if (*nptr >= '0' && *nptr <= '9')
-		nbr = 1;
-	return (nbr);
 }
