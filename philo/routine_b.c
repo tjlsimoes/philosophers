@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine_b.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:55:53 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/27 16:08:55 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/12/04 12:00:20 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,13 @@
 
 int	end_check(t_phil **phil)
 {
-	pthread_mutex_lock(&(*phil)->env->dead_mutex);
-	pthread_mutex_lock(&(*phil)->env->full_mutex);
+	pthread_mutex_lock(&(*phil)->env->state_mutex);
 	if ((*phil)->env->dead != 0 || (*phil)->env->full == (*phil)->env->nbr_phil)
 	{
-		pthread_mutex_unlock(&(*phil)->env->dead_mutex);
-		pthread_mutex_unlock(&(*phil)->env->full_mutex);
+		pthread_mutex_unlock(&(*phil)->env->state_mutex);
 		return (1);
 	}
-	pthread_mutex_unlock(&(*phil)->env->full_mutex);
+	// pthread_mutex_unlock(&(*phil)->env->full_mutex);
 	// pthread_mutex_unlock(&(*phil)->env->dead_mutex);
 
 	// pthread_mutex_lock(&(*phil)->env->write_mutex);
@@ -38,10 +36,10 @@ int	end_check(t_phil **phil)
 		pthread_mutex_lock(&(*phil)->env->write_mutex);
 		printf("%ld %u died\n", get_time() - (*phil)->env->ini_time, (*phil)->phil);
 		pthread_mutex_unlock(&(*phil)->env->write_mutex);
-		pthread_mutex_unlock(&(*phil)->env->dead_mutex);
+		pthread_mutex_unlock(&(*phil)->env->state_mutex);
 		return (1);
 	}
-	pthread_mutex_unlock(&(*phil)->env->dead_mutex);
+	pthread_mutex_unlock(&(*phil)->env->state_mutex);
 	return (0);
 }
 
@@ -62,7 +60,7 @@ int	dead_check(long current, long last, long die_time)
 
 int pickup_forks(t_phil **phil, unsigned int phil_nbr)
 {
-	if (phil_nbr % 2 != 0)
+	if (phil_nbr % 2 == 0)
 	{
 		pthread_mutex_lock(&(*phil)->right_fork->mutex);
 		// if (end_check(phil))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/27 11:39:01 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/12/04 11:50:55 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@ typedef struct s_env
 	long		sleep_time;
 	long			must_meals;
 	pthread_mutex_t	write_mutex;
-	pthread_mutex_t	dead_mutex;
-	pthread_mutex_t	full_mutex;
+	pthread_mutex_t	state_mutex;
 }	t_env;
 
 // Initial Error Check
@@ -109,5 +108,6 @@ void			msg_write(t_phil **phil, char *str);
 int				full_check(t_phil **phil);
 void			release_forks(t_phil **phil);
 int				one_phil_check(t_phil **phil);
+int				general_full_check(t_phil **phil, int i);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:05:34 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/27 15:24:51 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/11/27 18:43:19 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,8 @@ t_env	*env_init(int argc, char **argv)
 	else
 		env->must_meals = -1;
 	env->nbr_phil = atui(argv[1]);
-	pthread_mutex_init(&env->dead_mutex, NULL);
+	pthread_mutex_init(&env->state_mutex, NULL);
 	pthread_mutex_init(&env->write_mutex, NULL);
-	pthread_mutex_init(&env->full_mutex, NULL);
 	return (env);
 }
 
@@ -93,9 +92,8 @@ int	main(int argc, char **argv)
 
 	fork_lstclear(&env, env->nbr_phil);
 	phil_lstclear(&env, env->nbr_phil);
-	pthread_mutex_destroy(&env->dead_mutex);
 	pthread_mutex_destroy(&env->write_mutex);
-	pthread_mutex_destroy(&env->full_mutex);
+	pthread_mutex_destroy(&env->state_mutex);
 	free(env);
 	return (0);
 }
