@@ -6,7 +6,7 @@
 /*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/12/04 14:32:30 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/12/04 14:37:34 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void			*routine(void *arg);
 int				action(void (*f)(t_phil **), t_phil **phil);
 int				end_check(t_phil **phil);
 void			smart_sleep(t_phil **phil, long time);
-int				eat_smart_sleep(t_phil **phil, long time);
+void			eat_smart_sleep(t_phil **phil, long time);
 void			msg_write(t_phil **phil, char *str);
 int				full_check(t_phil **phil);
 int				one_phil_check(t_phil **phil);
