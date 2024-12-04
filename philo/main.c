@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:05:34 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/11/27 18:43:19 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/12/04 13:45:09 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	check_args(int argc, char **argv)
 
 void	philosophers_init(t_env **env)
 {
-	unsigned int 	i;
+	unsigned int	i;
 
 	i = 1;
 	while (i <= (*env)->nbr_phil)
@@ -42,12 +42,11 @@ void	philosophers_init(t_env **env)
 			phil_last_link(env);
 		i++;
 	}
-	// phil_lst_check(env, (*env)->nbr_phil); //
 }
 
 void	forks_init(t_env **env)
 {
-	unsigned int 	i;
+	unsigned int	i;
 
 	i = 1;
 	while (i <= (*env)->nbr_phil)
@@ -86,10 +85,8 @@ int	main(int argc, char **argv)
 	env = env_init(argc, argv);
 	forks_init(&env);
 	philosophers_init(&env);
-
 	create_threads(&env, env->nbr_phil);
 	join_threads(&env, env->nbr_phil);
-
 	fork_lstclear(&env, env->nbr_phil);
 	phil_lstclear(&env, env->nbr_phil);
 	pthread_mutex_destroy(&env->write_mutex);
