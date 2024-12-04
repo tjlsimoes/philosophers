@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine_a.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjorge-l < tjorge-l@student.42lisboa.co    +#+  +:+       +#+        */
+/*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:54:49 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/12/04 12:19:15 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/12/04 13:29:32 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ void	*routine(void *arg)
 
 	if (one_phil_check(&phil))
 		return (NULL);
-	// if (phil->phil % 2 == 0)
-	// 	usleep(500);
+	if (phil->phil % 2 == 0)
+		usleep(500);
 	while (general_full_check(&phil, i))
 	{
 		// if (phil->phil % 2 == 0)
