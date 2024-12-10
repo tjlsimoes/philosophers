@@ -6,7 +6,7 @@
 /*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:54:49 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/12/04 14:05:42 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/12/10 10:09:45 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ void	rest(t_phil **phil)
 void	think(t_phil **phil)
 {
 	msg_write(phil, "is thinking");
-	if (THINK_TIME)
-		smart_sleep(phil, THINK_TIME);
 }
 
 int	action(void (*f)(t_phil **), t_phil **phil)

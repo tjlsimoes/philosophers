@@ -6,7 +6,7 @@
 /*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:00:09 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/12/10 10:07:50 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/12/10 10:09:53 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,6 @@
 # include <stdio.h>
 # include <sys/time.h>
 # include <pthread.h>
-# ifndef THINK_TIME
-#  define THINK_TIME 0
-# endif
 
 typedef struct s_fork
 {
