@@ -6,7 +6,7 @@
 /*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 10:05:34 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/12/04 13:45:09 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/12/10 15:31:02 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	check_args(int argc, char **argv)
 {
 	int	i;
+	unsigned int arg;
 
 	if (argc != 6 && argc != 5)
 		error("Invalid number of arguments.\n");
@@ -23,7 +24,8 @@ void	check_args(int argc, char **argv)
 	{
 		if (!is_posnbr(argv[i]))
 			error("Invalid argument.\n");
-		if (i == 1 && atui(argv[i]) <= 0)
+		arg = atui(argv[i]);
+		if (arg <= 0 || arg > INT_MAX)
 			error("Invalid argument.\n");
 		i++;
 	}
