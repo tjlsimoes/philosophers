@@ -6,7 +6,7 @@
 /*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:59:08 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/12/04 14:36:26 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/12/10 10:49:49 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,15 @@
 void	smart_sleep(t_phil **phil, long time)
 {
 	long	beginning;
-	long	check;
 
 	if (end_check(phil))
 		return ;
 	beginning = get_time();
-	check = beginning + 9;
 	while ((get_time() - beginning) < time)
 	{
-		if (get_time() == check)
-		{
-			if (dead_check(get_time(), (*phil)->last_meal, \
-				(*phil)->env->die_time))
-				return (update_dead(phil));
-			check += 10;
-		}
+		if (dead_check(get_time(), (*phil)->last_meal, \
+			(*phil)->env->die_time))
+			return (update_dead(phil));
 		usleep(250);
 	}
 }
@@ -37,19 +31,13 @@ void	smart_sleep(t_phil **phil, long time)
 void	eat_smart_sleep(t_phil **phil, long time)
 {
 	long	beginning;
-	long	check;
 
 	beginning = get_time();
-	check = beginning + 9;
 	while ((get_time() - beginning) < time)
 	{
-		if (get_time() == check)
-		{
-			if (dead_check(get_time(), (*phil)->last_meal, \
-				(*phil)->env->die_time))
-				return (update_dead(phil));
-			check += 10;
-		}
+		if (dead_check(get_time(), (*phil)->last_meal, \
+			(*phil)->env->die_time))
+			return (update_dead(phil));
 		usleep(250);
 	}
 	(*phil)->last_meal = get_time();
