@@ -6,7 +6,7 @@
 /*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:59:08 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/12/10 10:49:49 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/12/10 11:03:38 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,11 @@ void	eat_smart_sleep(t_phil **phil, long time)
 {
 	long	beginning;
 
+	if (dead_check(get_time(), (*phil)->last_meal, \
+			(*phil)->env->die_time))
+		return (update_dead(phil));
 	beginning = get_time();
+	(*phil)->last_meal = beginning;
 	while ((get_time() - beginning) < time)
 	{
 		if (dead_check(get_time(), (*phil)->last_meal, \
@@ -40,7 +44,6 @@ void	eat_smart_sleep(t_phil **phil, long time)
 			return (update_dead(phil));
 		usleep(250);
 	}
-	(*phil)->last_meal = get_time();
 }
 
 void	msg_write(t_phil **phil, char *str)
