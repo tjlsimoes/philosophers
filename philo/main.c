@@ -14,8 +14,8 @@
 
 void	check_args(int argc, char **argv)
 {
-	int	i;
-	unsigned int arg;
+	int				i;
+	unsigned int	arg;
 
 	if (argc != 6 && argc != 5)
 		error("Invalid number of arguments.\n");
@@ -87,8 +87,8 @@ int	main(int argc, char **argv)
 	env = env_init(argc, argv);
 	forks_init(&env);
 	philosophers_init(&env);
-	create_threads(&env, env->nbr_phil);
-	join_threads(&env, env->nbr_phil);
+	if (create_threads(&env, env->nbr_phil))
+		join_threads(&env, env->nbr_phil);
 	fork_lstclear(&env, env->nbr_phil);
 	phil_lstclear(&env, env->nbr_phil);
 	pthread_mutex_destroy(&env->write_mutex);

@@ -68,7 +68,7 @@ void	phil_last_link(t_env **env)
 	(*env)->philosopher->left_phil = node;
 }
 
-void	create_threads(t_env **env, unsigned int lst_size)
+int	create_threads(t_env **env, unsigned int lst_size)
 {
 	t_phil			*node;
 	unsigned int	i;
@@ -76,15 +76,17 @@ void	create_threads(t_env **env, unsigned int lst_size)
 	node = (*env)->philosopher;
 	(*env)->ini_time = get_time();
 	if (!node)
-		return ;
+		return (0);
 	i = 1;
 	while (i <= lst_size)
 	{
 		node->last_meal = (*env)->ini_time;
-		pthread_create(&node->thread_id, NULL, routine, node);
+		if (pthread_create(&node->thread_id, NULL, routine, node), 0)
+			return (join_threads(env, --i), 0);
 		node = node->right_phil;
 		i++;
 	}
+	return (1);
 }
 
 void	join_threads(t_env **env, unsigned int lst_size)

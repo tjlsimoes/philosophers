@@ -82,7 +82,7 @@ void			phil_lst_check(t_env **env, unsigned int lst_size);
 void			phil_lstclear(t_env **env, unsigned int lst_size);
 void			phil_lstadd_back(t_env **env, t_phil *new, unsigned int i);
 void			phil_last_link(t_env **env);
-void			create_threads(t_env **env, unsigned int lst_size);
+int				create_threads(t_env **env, unsigned int lst_size);
 void			join_threads(t_env **env, unsigned int lst_size);
 
 void			fork_lstclear(t_env **env, unsigned int lst_size);
