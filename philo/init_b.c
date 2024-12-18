@@ -6,7 +6,7 @@
 /*   By: tjorge-l <tjorge-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:15:49 by tjorge-l          #+#    #+#             */
-/*   Updated: 2024/12/04 13:48:44 by tjorge-l         ###   ########.fr       */
+/*   Updated: 2024/12/18 10:09:25 by tjorge-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	create_threads(t_env **env, unsigned int lst_size)
 	while (i <= lst_size)
 	{
 		node->last_meal = (*env)->ini_time;
-		if (pthread_create(&node->thread_id, NULL, routine, node), 0)
+		if (pthread_create(&node->thread_id, NULL, routine, node))
 			return (join_threads(env, --i), 0);
 		node = node->right_phil;
 		i++;
